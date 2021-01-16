@@ -86,6 +86,16 @@ def login():
         }
     )
 
+@app.route("/profile/", methods=["GET"])
+def me():
+    success, session_token = extract_user_session_token(request)
+    if not success:
+        return session_token
+    user = user_helpers.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+    return success_response(user.serialize())
+
 @app.route("/transaction_entry/", methods=["POST"])
 def create_entry():
     success, session_token = extract_user_session_token(request)

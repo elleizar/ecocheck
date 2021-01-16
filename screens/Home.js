@@ -1,19 +1,38 @@
 import React, { Component } from "react";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Home screen</Text>
-      <Button
-        title="Login"
-        onPress={() => navigation.navigate('Login')}
-      />
-      <Button
-        title="Sign Up"
-        onPress={() => navigation.navigate('Register')}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={{ flex: 3, justifyContent: 'flex-end' }}>
+        <Text style={{ color: 'green', fontSize: 65 }}>
+          ecocheck.
+      </Text>
+      </View>
+      <View style={{ flex: 2 }}>
+        <Text style={{ color: '#485', fontSize: 15 }}>
+          making lives more sustainable.
+      </Text>
+      </View>
+      <View style={{ flexDirection: "row", marginBottom: 200 }}>
+        <View style={{ width: 150 }}>
+          <Button style={styles.buttonStyle}
+            title="Login"
+            onPress={() => navigation.navigate('Login')}
+            color='green'
+          />
+        </View>
+        <Text>{'      '}</Text>
+        <View style={{ width: 150}}>
+          <Button style={styles.buttonStyle}
+            title="Sign Up"
+            onPress={() => navigation.navigate('Register')}
+            color='green'
+          />
+        </View>
+      </View>
+
+    </SafeAreaView >
   )
 }
 
@@ -25,5 +44,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonStyle: {
+    backgroundColor: 'green',
+    width: 150,
+    height: 100,
+  }
 });
 

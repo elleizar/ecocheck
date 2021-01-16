@@ -8,7 +8,8 @@ import { ProfileStack } from './ProfileStack.js';
 const Stack = createStackNavigator();
 export default function HomeStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      headerShown: false}}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />

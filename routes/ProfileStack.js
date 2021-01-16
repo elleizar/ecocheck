@@ -1,11 +1,17 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import Profile from '../screens/Profile.js'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import * as React from 'react';
+import Map from '../screens/Map.js'
+import Search from '../screens/Search.js'
+import Account from '../screens/Account.js'
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 export function ProfileStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Profile" component={Profile} />
-    </Stack.Navigator>
+    <Tab.Navigator screenOptions={{
+      headerShown: false}}>
+      <Tab.Screen name="Map" component={Map} />
+      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen name="Account" component={Account} />
+    </Tab.Navigator>
   )
 }

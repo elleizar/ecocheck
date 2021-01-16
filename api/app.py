@@ -42,6 +42,23 @@ def register_user():
         }
     )
 
+@app.route("/login/", methods=["POST"])
+def login():
+    body = json.loads(request.data)
+    email = body.get("email")
+    password = body.get("password")
+    if email is None or password is None:
+        return json.dumps({"error": "Invalid email or password"})
+    success, user = user_helpers.verify_credentials(email, password)
+    if not success:
+        return json.dumps({"error": "Incorrect email or password."})
+    return json.dumps(
+        {
+            "session_token": user.session_token,
+            "session_expiration": str(user.session_expiration),
+            "update_token": user.update_token,
+        }
+    )
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

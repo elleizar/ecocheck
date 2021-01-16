@@ -39,6 +39,10 @@ class User(db.Model):
         self.session_expiration = datetime.datetime.now() + datetime.timedelta(days=1)
         self.session_expiration = self.session_expiration.replace(microsecond=0)
         self.update_token = self._urlsafe_base_64()
+    
+    # Updates rewards for user
+    def update_rewards(self, rewards):
+        self.rewards += rewards
 
     def verify_password(self, password):
         return bcrypt.checkpw(password.encode("utf8"), self.password_digest)
@@ -110,7 +114,7 @@ class Business(db.Model):
     latitude = db.Column(db.Integer, nullable=False)
     longitude = db.Column(db.Integer, nullable=False)
     address = db.Column(db.String, nullable=True)
-    rating = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Float, nullable=False)
 
     def __init__(self, **kwargs):
         self.user_id = kwargs.get("user_id")
@@ -123,6 +127,10 @@ class Business(db.Model):
         self.address = kwargs.get("address")
         self.rating = kwargs.get("rating")
     
+     # Updates rewards for user
+    def update_rating(self, rating):
+        self.rating = (self.rating + rating) / 2
+
     def serialize(self):
         return {
             "id": self.id,

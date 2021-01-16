@@ -6,6 +6,7 @@ from db import db, Business, TransactionEntry, User
 from flask import Flask
 from flask import request
 import user_helpers
+import business_helpers
 from radar import RadarClient
 from dotenv import load_dotenv
 from geopy import distance
@@ -122,6 +123,8 @@ def create_entry():
         transaction_entry = TransactionEntry(user_id=user.id, item_type=item_type, amount=amount, business_name=business_name, rating=rating, created_at=date, latitude=latitude, longitude=longitude, address=address)
         db.session.add(transaction_entry)
         db.session.commit()
+        user_helpers.update_rewards(user.email, amount * 0.015)
+        business_helpers.update_rating(business_name, rating)
         return success_response(transaction_entry.serialize())
 
 @app.route("/transaction_entries/", methods=["GET"])

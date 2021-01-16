@@ -68,6 +68,33 @@ def register_user():
         }
     )
 
+@app.route("/business/", methods = ["POST"])
+def business():
+    def create_entry():
+    success, session_token = extract_user_session_token(request)
+    if not success:
+        return session_token
+    user = user_helpers.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+    body = json.loads(request.data)
+    id = body.get ("id")
+    user_id = body.get("user_id")
+    owner = body.get("owner")
+    business_type = body.get("business_type")
+    business_name = body.get("business_name")
+    description = body.get("description")
+    latitude = body.get("latitude")
+    longitude = body.get("longitude")
+    rating = body.get("rating")
+    address = create_business_address(latitude, longitude)
+    date = datetime.datetime.now().replace(microsecond=0)
+    new_business = Business(user_id=user.id, owner=owner, business_type=business_type, business_name=business_name, description = description, rating=rating, created_at=date, latitude=latitude, longitude=longitude, address=address)
+    db.session.add(new_business)
+    db.session.commit()
+    return success_response(new_business.serialize())    
+    )
+
 @app.route("/login/", methods=["POST"])
 def login():
     body = json.loads(request.data)

@@ -1,3 +1,4 @@
+import json
 from db import db, Business, TransactionEntry, User
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -11,14 +12,34 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.String, nullable=True, unique=False)
-#     email = db.Column(db.String, nullable=False, unique=True)
-#     password_digest = db.Column(db.String, nullable=False)
-#     session_token = db.Column(db.String, nullable=False, unique=True)
-#     session_expiration = db.Column(db.DateTime, nullable=False)
-#     update_token = db.Column(db.String, nullable=False, unique=True)
+def success_response(data, code=200):
+    return json.dumps({"success": True, "data": data}), code
+
+def failure_response(message, code=404):
+    return json.dumps({"success": False, "error": message}), code
+
+@app.route("/register/", methods = ["POST"])
+def register_user():
+    body = json.loads(request.data)
+    email = body.get("email")
+    password = body.get("password")
+    user_id = body.get("user_id")
+    name = body.get("name")
+    if email is None or password is None or name is None:
+        return failure_response("Invalid email or password")
+    if user_id is None:
+        return json.dumps({"error": "Need to supply user_id."})
+    created, user = users_helpers.create_user(email, password, user_id, name)
+    if not created:
+        return failure_response("User already exists.")
+    return json.dumps(
+        {
+            "session_token": user.session_token,
+            "session_expiration": str(user.session_expiration),
+            "update_token": user.update_token,
+        }
+    )
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

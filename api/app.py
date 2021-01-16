@@ -115,9 +115,9 @@ def create_entry():
     date = datetime.datetime.now().replace(microsecond=0)
     business = Business.query.filter_by(business_name=business_name).first()
     if business is None:
+        # find up to three businesses in the same category from the database to recommend
         recommended_businesses = Business.query.filter_by(business_type=item_type).limit(3).all()
         return success_response([b.serialize() for b in recommended_businesses])
-        # return failure_response('Business does not exist, here are some recommended sustainable stores!')
     else: 
         transaction_entry = TransactionEntry(user_id=user.id, item_type=item_type, amount=amount, business_name=business_name, rating=rating, created_at=date, latitude=latitude, longitude=longitude, address=address)
         db.session.add(transaction_entry)

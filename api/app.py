@@ -1,7 +1,9 @@
 import json
+import requests
 from db import db, Business, TransactionEntry, User
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask import request
+import user_helpers
 
 app = Flask(__name__)
 
@@ -29,7 +31,7 @@ def register_user():
         return failure_response("Invalid email or password")
     if user_id is None:
         return json.dumps({"error": "Need to supply user_id."})
-    created, user = users_helpers.create_user(email, password, user_id, name)
+    created, user = user_helpers.create_user(email, password, user_id, name)
     if not created:
         return failure_response("User already exists.")
     return json.dumps(

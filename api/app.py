@@ -108,6 +108,30 @@ def create_entry():
     db.session.commit()
     return success_response(transaction_entry.serialize())
 
+@app.route("/transaction_entries/", methods=["GET"])
+def view_all_entries():
+    success, session_token = extract_user_session_token(request)
+    if not success:
+        return session_token
+    user = user_helpers.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+    transaction_entries = TransactionEntry.query.filter_by(user_id=user.id)
+    return success_response([t.serialize() for t in transaction_entries])
+
+@app.route("/transaction_entries/<int:transaction_entry_id>/", methods=["GET"])
+def view_specific_entry(transaction_entry_id):
+    success, session_token = extract_user_session_token(request)
+    if not success:
+        return session_token
+    user = user_helpers.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "Invalid session token."})
+    transaction_entry = TransactionEntry.query.filter_by(user_id=user.id, id=transaction_entry_id).first()
+    if transaction_entry is None:
+        return failure_response('Entry does not exist.')
+    return success_response(transaction_entry.serialize())
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

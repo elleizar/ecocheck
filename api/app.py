@@ -113,10 +113,16 @@ def create_entry():
     rating = body.get("rating")
     address = create_business_address(latitude, longitude)
     date = datetime.datetime.now().replace(microsecond=0)
-    transaction_entry = TransactionEntry(user_id=user.id, item_type=item_type, amount=amount, business_name=business_name, rating=rating, created_at=date, latitude=latitude, longitude=longitude, address=address)
-    db.session.add(transaction_entry)
-    db.session.commit()
-    return success_response(transaction_entry.serialize())
+    business = Business.query.filter_by(business_name=business_name).first()
+    if business is None:
+        recommended_businesses = Business.query.filter_by(business_type=item_type).limit(3).all()
+        return success_response([b.serialize() for b in recommended_businesses])
+        # return failure_response('Business does not exist, here are some recommended sustainable stores!')
+    else: 
+        transaction_entry = TransactionEntry(user_id=user.id, item_type=item_type, amount=amount, business_name=business_name, rating=rating, created_at=date, latitude=latitude, longitude=longitude, address=address)
+        db.session.add(transaction_entry)
+        db.session.commit()
+        return success_response(transaction_entry.serialize())
 
 @app.route("/transaction_entries/", methods=["GET"])
 def view_all_entries():

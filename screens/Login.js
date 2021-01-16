@@ -1,14 +1,30 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, TextInput } from 'react-native';
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Login screen</Text>
-      <Button
-        title="Login"
-        onPress={() => navigation.navigate('ProfileStack')}
-      />
+      <View>
+        <Text style={{ marginBottom: 50, fontSize: 50, color: '#485' }}>
+          Login
+        </Text>
+        <TextInput
+          style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 20 }}
+          label="Email"
+        // onChangeText={(text) => setEmail(text)}
+        />
+        <TextInput
+          label="Password"
+          style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 60 }}
+          secureTextEntry
+        // onChangeText={(text) => setPassword(text)}
+        />
+        <Button style={styles.buttonStyle}
+          title="Login"
+          onPress={() => navigation.navigate('ProfileStack')}
+          color='green'
+        />
+      </View>
     </SafeAreaView>
   )
 }
@@ -20,4 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonStyle: {
+    backgroundColor: 'green',
+  }
 });

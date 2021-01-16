@@ -25,7 +25,7 @@ export default function Home({ navigation }) {
         <Text>{'      '}</Text>
         <View style={{ width: 150}}>
           <Button style={styles.buttonStyle}
-            title="Sign Up"
+            title="Register"
             onPress={() => navigation.navigate('Register')}
             color='green'
           />

@@ -34,7 +34,7 @@ export const login = async (email, password) => {
     method: "POST",
     body: JSON.stringify({
       email: email,
-      password: email,
+      password: password,
     })
   }).then(res => res.json())
   .then(async data =>{

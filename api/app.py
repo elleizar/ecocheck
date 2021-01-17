@@ -1,7 +1,6 @@
 import datetime
 import json
 import os
-import time 
 import requests
 from db import db, Business, TransactionEntry, User
 from flask import Flask
@@ -217,10 +216,6 @@ def view_specific_business(business_id):
     if business is None:
         return failure_response('Entry does not exist.')
     return success_response(business.serialize())
-
-@app.route('/time')
-def get_current_time():
-    return {'time': time.time()}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

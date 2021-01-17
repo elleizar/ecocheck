@@ -1,11 +1,10 @@
-import { getUpdateToken, getSessionToken, setSessionToken } from "./token"
-import { AsyncStorage } from "@react-native-community/async-storage";
+import { getSessionToken } from "./token"
 
 const BASE_URL = 'http://localhost:5000'
 
 export async function addTransactionEntry(latitude, longitude, item_type, amount, business_name, rating) {
   const session_token = await getSessionToken()
-  return fetch(`${BASE_URL}entry/`,
+  return fetch(`${BASE_URL}transaction_entry/`,
   {
     method: "POST",
     headers: {
@@ -17,32 +16,28 @@ export async function addTransactionEntry(latitude, longitude, item_type, amount
       latitude: latitude,
       longitude: longitude,
       item_type: item_type,
-      description: description
+      amount: amount,
+      business_name: business_name,
+      rating: rating
     })
-  }).then(data=> data.json())
+  }).then(data => data.json())
 }
 
-export async function viewEntriesAtCoord(latitude, longitude) {
+export async function viewTransactionEntry(id) {
   const session_token = await getSessionToken()
-    return fetch(`${BASE_URL}entries/`,
+    return fetch(`${BASE_URL}transaction_entries/${id}`,
     {
-      method: "POST",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + session_token
-      },
-      body: JSON.stringify({
-        latitude: latitude,
-        longitude: longitude,
-      })
+        method: "POST",
+        headers: {
+            Authorization: 'Bearer ' + session_token
+    }
     }).then(data=> data.json())
 
 }
 
-export async function viewAllEntries() {
+export async function viewAllTransactionEntries() {
     const session_token = await getSessionToken()
-    return fetch(`${BASE_URL}entries/`,
+    return fetch(`${BASE_URL}transaction_entries/`,
     {
       method: "GET",
       headers: {
@@ -53,9 +48,9 @@ export async function viewAllEntries() {
     }).then(data=> data.json())
 }
 
-export async function viewFriendsEntries(latitude, longitude) {
+export async function addBusiness(latitude, longitude, business_type, description, business_name, rating) {
     const session_token = await getSessionToken()
-    return fetch(`${BASE_URL}friend-entries/`,
+    return fetch(`${BASE_URL}business/`,
     {
       method: "POST",
       headers: {
@@ -66,57 +61,31 @@ export async function viewFriendsEntries(latitude, longitude) {
       body: JSON.stringify({
         latitude: latitude,
         longitude: longitude,
+        business_type: business_type,
+        description: description,
+        business_name: business_name,
+        rating: rating
       })
     }).then(data=> data.json())
+  }
+
+export async function viewBusiness(id) {
+const session_token = await getSessionToken()
+    return fetch(`${BASE_URL}businesses/${id}`,
+    {
+    method: "POST",
+    headers: {
+        Authorization: 'Bearer ' + session_token
+    }
+    }).then(data=> data.json())
+
 }
 
-export async function searchFriend(query) {
+export async function viewAllBusinesses() {
     const session_token = await getSessionToken()
-    return fetch(`${BASE_URL}friend-search/${query}`,
+    return fetch(`${BASE_URL}businesses/`,
     {
       method: "GET",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + session_token
-      }
-    }).then(data=> data.json())
-}
-
-export async function addFriends(friendList) {
-    const session_token = getSessionToken()
-    return fetch(`${BASE_URL}friends/`,
-    {
-      method: "POST",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + session_token
-      },
-      body: JSON.stringify({
-        friends: friendList,
-      })
-    }).then(data=> data.json())
-}
-
-export async function deleteFriend(friend) {
-    const session_token = getSessionToken()
-    return fetch(`${BASE_URL}friends/${friend}`,
-    {
-      method: "DELETE",
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + session_token
-      }
-    }).then(data=> data.json())
-}
-
-export async function deleteEntry(entry) {
-    const session_token = getSessionToken()
-    return fetch(`${BASE_URL}entry/${entry}`,
-    {
-      method: "DELETE",
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

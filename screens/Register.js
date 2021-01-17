@@ -6,13 +6,6 @@ export default function Register({ navigation }) {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [currentTime, setCurrentTime] = useState(0);
-
-  useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
-  }, []);
 
   const onRegister = async () => {
     register(email, password, name)
@@ -23,7 +16,6 @@ export default function Register({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-      <p>The current time is {currentTime}.</p>
         <Text style={{ marginBottom: 50, fontSize: 50, color: '#485' }}>
           Register
       </Text>

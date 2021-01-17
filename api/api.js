@@ -40,7 +40,7 @@ export async function viewTransactionEntry(id) {
 
 }
 
-export async function viewAllTransactionEntries() {
+export const viewAllTransactionEntries = async () => {
     const session_token = await getSessionToken()
     return fetch(`${BASE_URL}transaction_entries/`,
     {
@@ -50,7 +50,12 @@ export async function viewAllTransactionEntries() {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + session_token
       }
-    }).then(data=> data.json())
+    }).then(res => { 
+        return res.json()
+      })
+    .then(async data =>{
+      return success(data)
+    })
 }
 
 export async function addBusiness(latitude, longitude, business_type, description, business_name, rating) {

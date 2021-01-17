@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { viewProfile } from "../api/api";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
 
-export default function Account() {
+export default function Account({navigation}) {
   const [user, setUser] = React.useState([]);
 
   useEffect(() => {
@@ -18,10 +18,10 @@ export default function Account() {
       <Text>Profile screen</Text>
       <p>{user.name}</p>
       <p>{user.rewards}</p>
-      {/* <Button
-        title="Login"
-        onPress={() => navigation.navigate('Profile')}
-      /> */}
+      <Button
+        title="History"
+        onPress={() => navigation.navigate('History')}
+      />
     </View>
   )
 }

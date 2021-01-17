@@ -6,12 +6,12 @@ export default function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 3, justifyContent: 'flex-end' }}>
-        <Text style={{ color: 'green', fontSize: 65 }}>
+        <Text style={{ fontFamily: "verdana", color: 'green', fontSize: 65 }}>
           ecocheck.
       </Text>
       </View>
       <View style={{ flex: 2 }}>
-        <Text style={{ color: '#485', fontSize: 15 }}>
+        <Text style={{ fontFamily: "verdana", color: '#485', fontSize: 15 }}>
           making lives more sustainable.
       </Text>
       </View>

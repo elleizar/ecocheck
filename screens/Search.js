@@ -30,7 +30,6 @@ const Card = ({ business_name, description, location, category }) => (
     <Text
       style={{
         fontSize: 15,
-        // color: "#575632",
         fontFamily: "RobotoMono-Regular",
         fontWeight: "600",
         alignItems: "center",

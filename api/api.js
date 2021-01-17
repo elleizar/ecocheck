@@ -103,3 +103,16 @@ export const viewAllBusinesses = async () => {
       return success(data)
     })
 }
+
+export async function viewProfile() {
+    const session_token = await getSessionToken()
+    return fetch(`${BASE_URL}profile/`,
+    {
+      method: "GET",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + session_token
+      }
+    }).then(data=> data.json())
+}

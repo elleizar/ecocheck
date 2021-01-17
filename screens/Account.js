@@ -1,10 +1,23 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import { viewProfile } from "../api/api";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
 
 export default function Account() {
+  const [user, setUser] = React.useState([]);
+
+  useEffect(() => {
+    viewProfile().then(res => {
+      if (res) {
+        setUser(res.data)
+      }
+    })
+  }, [])
+
   return (
     <View style={styles.container}>
       <Text>Profile screen</Text>
+      <p>{user.name}</p>
+      <p>{user.rewards}</p>
       {/* <Button
         title="Login"
         onPress={() => navigation.navigate('Profile')}

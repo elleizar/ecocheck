@@ -1,22 +1,29 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { StyleSheet, Button, View, SafeAreaView, Text, TextInput } from 'react-native';
 import { register } from "../api/auth";
-
 export default function Register({ navigation }) {
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [currentTime, setCurrentTime] = useState(0);
+
+  useEffect(() => {
+    fetch('/time').then(res => res.json()).then(data => {
+      setCurrentTime(data.time);
+    });
+  }, []);
 
   const onRegister = async () => {
-    register(name, email, password)
-      .then(() => navigation.navigate('ProfileStack'))
-      .catch((err) => console.log(err.error));
+    register(email, password, name)
+        .then(() => navigation.navigate('ProfileStack'))
+        .catch((err) => console.log('error'));
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <View>
+      <p>The current time is {currentTime}.</p>
         <Text style={{ marginBottom: 50, fontSize: 50, color: '#485' }}>
           Register
       </Text>
@@ -41,7 +48,7 @@ export default function Register({ navigation }) {
         />
         <Button style={styles.buttonStyle}
           title="Register"
-          onPress={onRegister}
+          onPress={() => onRegister()}
           color='green'
         />
       </View>

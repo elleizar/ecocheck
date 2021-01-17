@@ -1,10 +1,12 @@
 import datetime
 import json
 import os
+import time 
 import requests
 from db import db, Business, TransactionEntry, User
 from flask import Flask
 from flask import request
+from flask_cors import CORS
 import user_helpers
 import business_helpers
 from radar import RadarClient
@@ -13,6 +15,7 @@ from geopy import distance
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -214,6 +217,10 @@ def view_specific_business(business_id):
     if business is None:
         return failure_response('Entry does not exist.')
     return success_response(business.serialize())
+
+@app.route('/time')
+def get_current_time():
+    return {'time': time.time()}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

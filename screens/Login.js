@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Button, View, SafeAreaView, Text, TextInput } from 'react-native';
 import { login } from "../api/auth";
-
-
 export default function Login({ navigation }) {
   
   const [email, setEmail] = React.useState("");
@@ -11,7 +9,7 @@ export default function Login({ navigation }) {
   const onLogin = async () => {
     login(email, password)
       .then(() => navigation.navigate('ProfileStack'))
-      .catch((err) => console.log(err.error));
+      .catch((err) => console.log('error'));
   }
 
   return (
@@ -35,7 +33,7 @@ export default function Login({ navigation }) {
         />
         <Button style={styles.buttonStyle}
           title="Login"
-          onPress={onLogin}
+          onPress={() => onLogin()}
           color='green'
         />
       </View>

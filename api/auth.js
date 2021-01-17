@@ -1,7 +1,7 @@
 import {getSessionToken, setUpdateToken, setSessionToken} from "./token"
 import AsyncStorage from '@react-native-community/async-storage';
 
-const BASE_URL = 'https://localhost:5000/'
+const BASE_URL = 'https://localhost:19006/'
 
 const success = (value) => {
   return new Promise((resolve) => {resolve(value);
@@ -33,8 +33,8 @@ export const login = async (email, password) => {
   {
     method: "POST",
     body: JSON.stringify({
-      email,
-      password,
+      email: email,
+      password: email,
     })
   }).then(res => res.json())
   .then(async data =>{
@@ -54,13 +54,14 @@ export const register = async (email, password, name) => {
   {
     method: "POST",
     body: JSON.stringify({
-      email,
-      password,
-      name,
+      email: email,
+      password: password,
+      name: name,
       user_id:"user_id",
     })
   }).then(res => res.json())
   .then(async data =>{
+    console.log(data)
     if (data.error){
       return failure(data)
     }

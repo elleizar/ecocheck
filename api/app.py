@@ -66,6 +66,7 @@ def update_session():
 
 @app.route("/register/", methods = ["POST"])
 def register_user():
+    print(body)
     body = json.loads(request.data)
     email = body.get("email")
     password = body.get("password")

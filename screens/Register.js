@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Button, View, SafeAreaView, Text, TextInput } from 'react-native';
+import { register } from "../api/auth";
 
 export default function Register({ navigation }) {
 
@@ -8,12 +9,9 @@ export default function Register({ navigation }) {
   const [password, setPassword] = React.useState("");
 
   const onRegister = async () => {
-    let info = {
-      name: name,
-      email: email,
-      password: password,
-    };
     register(name, email, password)
+      .then(() => navigation.navigate('ProfileStack'))
+      .catch((err) => console.log(err.error));
   }
 
   return (
@@ -22,28 +20,28 @@ export default function Register({ navigation }) {
         <Text style={{ marginBottom: 50, fontSize: 50, color: '#485' }}>
           Register
       </Text>
-        <TextInput
+        <TextInput 
           style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 20 }}
           label="Name"
           placeholder="Name"
-        // onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setName(text)}
         />
         <TextInput
           style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 20 }}
           label="Email"
           placeholder="Email"
-        // onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
         />
         <TextInput
           label="Password"
           placeholder="Password"
           style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 60 }}
           secureTextEntry
-        // onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
         />
         <Button style={styles.buttonStyle}
           title="Register"
-          onPress={() => navigation.navigate('ProfileStack')}
+          onPress={onRegister}
           color='green'
         />
       </View>
@@ -62,4 +60,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'green'
   }
 });
-

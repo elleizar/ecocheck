@@ -34,6 +34,7 @@ export default function Login({ navigation }) {
         <Button style={styles.buttonStyle}
           title="Login"
           onPress={() => onLogin()}
+          onPress={() => navigation.navigate('ProfileStack')}
           color='green'
         />
       </View>

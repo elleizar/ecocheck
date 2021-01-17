@@ -2,6 +2,18 @@ import React, { Component } from "react";
 import { StyleSheet, Button, View, SafeAreaView, Text, TextInput } from 'react-native';
 
 export default function Login({ navigation }) {
+  
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const onLogin = async () => {
+    let info = {
+      email: email,
+      password: password,
+    };
+    login(email, password)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -11,10 +23,12 @@ export default function Login({ navigation }) {
         <TextInput
           style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 20 }}
           label="Email"
+          placeholder="Email"
         // onChangeText={(text) => setEmail(text)}
         />
         <TextInput
           label="Password"
+          placeholder="Password"
           style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 60 }}
           secureTextEntry
         // onChangeText={(text) => setPassword(text)}

@@ -1,16 +1,82 @@
-import React, { Component } from "react";
-import { StyleSheet, Button, View, SafeAreaView, Text, TextInput } from 'react-native';
+import React, { Component, useEffect } from "react";
+import { StyleSheet, Button, FlatList, TouchableOpacity, View, SafeAreaView, Text, TextInput } from 'react-native';
+import { viewAllBusinesses } from "../api/api";
+
+const Card = ({ business_name, description, location, category }) => (
+  <View
+    style={{
+      backgroundColor: "#F4F1DE",
+      width: "90%",
+      alignSelf: "center",
+      borderRadius: 20,
+      marginVertical: 15,
+      padding: 20,
+      paddingTop: 30,
+      shadowColor: "black",
+      shadowRadius: 4,
+      shadowOpacity: 0.25,
+      shadowOffset: { width: 0, height: 2 },
+    }}
+  >
+      <Text
+        style={{
+          color: "black",
+          fontSize: 12,
+          fontFamily: "RobotoMono-Regular",
+        }}
+      >
+        {category}
+      </Text>
+    <Text
+      style={{
+        fontSize: 15,
+        // color: "#575632",
+        fontFamily: "RobotoMono-Regular",
+        fontWeight: "600",
+        alignItems: "center",
+      }}
+    >
+      {" "}
+      {business_name}{" "}
+    </Text>
+
+    <Text
+      style={{
+        fontSize: 12,
+        color: "#575632",
+        fontFamily: "RobotoMono-Regular",
+        alignItems: "center",
+        margin: 2,
+        marginTop: 10,
+      }}
+    >
+      {" "}
+      {description}{" "}
+    </Text>
+  </View>
+);
 
 export default function Search({ navigation }) {
+  const [businesses, setBusinesses] = React.useState([]);
 
-  const [search_item, setName] = React.useState("");
-  
-  const onSearch = async () => {
-    let info = {
-      name: search_item,
-   };
-    search(search_item)
-  }
+  useEffect(() => {
+    viewAllBusinesses().then(res => {
+      if (res) {
+        setBusinesses(res.data)
+      }
+    })
+  }, [])
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.push("journal-detail", item)}>
+      <Card
+        business_name={item.business_name}
+        description={item.description}
+        location={item.address}
+        category={item.category}
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -28,6 +94,12 @@ export default function Search({ navigation }) {
           //onPress={() => navigation.navigate('ProfileStack')}
           color='green'
         />
+        <FlatList
+            // style={styles.flatlist}
+            data={businesses}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
       </View>
     </SafeAreaView>
   )

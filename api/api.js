@@ -1,6 +1,11 @@
 import { getSessionToken } from "./token"
 
-const BASE_URL = 'http://localhost:5000'
+const BASE_URL = 'http://localhost:5000/'
+
+const success = (value) => {
+    return new Promise((resolve) => {resolve(value);
+    });
+  };
 
 export async function addTransactionEntry(latitude, longitude, item_type, amount, business_name, rating) {
   const session_token = await getSessionToken()
@@ -81,7 +86,7 @@ const session_token = await getSessionToken()
 
 }
 
-export async function viewAllBusinesses() {
+export const viewAllBusinesses = async () => {
     const session_token = await getSessionToken()
     return fetch(`${BASE_URL}businesses/`,
     {
@@ -91,5 +96,10 @@ export async function viewAllBusinesses() {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + session_token
       }
-    }).then(data=> data.json())
+    }).then(res => { 
+        return res.json()
+      })
+    .then(async data =>{
+      return success(data)
+    })
 }

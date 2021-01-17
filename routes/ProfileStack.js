@@ -6,6 +6,7 @@ import Account from '../screens/Account.js'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import History from '../screens/History.js';
 
 const Tab = createBottomTabNavigator();
 export function ProfileStack() {
@@ -16,6 +17,7 @@ export function ProfileStack() {
         if (route.name === 'Map') { return <FontAwesome5 name="map-marked" size={24} color="black" /> }
         else if (route.name === 'Search') { return <FontAwesome name="search" size={24} color="black" /> }
         else if (route.name === 'Account') { return <MaterialIcons name="account-box" size={24} color="black" /> }
+  
       },
     })}>
       <Tab.Screen name="Map" component={Map} />

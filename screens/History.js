@@ -1,11 +1,19 @@
-import React, { Component } from "react";
+import React, { Component,useEffect } from "react";
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
 
 export default function History({ navigation }) {
     return (
       <View style={styles.container}>
-        <Text>Map screen</Text>
-      </View>
+        <Text style={{ marginBottom: 50, fontSize: 50, color: '#485',textAlign: "left" }}>
+          Purchase History
+        </Text>
+
+        <Button style={styles.buttonStyle}
+          title="Open in Bank App"
+          onPress={() => onHistory()}
+          color='green'
+        />
+      </View> 
     )
   };
   

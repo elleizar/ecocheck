@@ -22,7 +22,6 @@ const Card = ({ business_name, description, location, category }) => (
         style={{
           color: "black",
           fontSize: 12,
-          fontFamily: "RobotoMono-Regular",
         }}
       >
         {category}
@@ -30,7 +29,6 @@ const Card = ({ business_name, description, location, category }) => (
     <Text
       style={{
         fontSize: 15,
-        fontFamily: "RobotoMono-Regular",
         fontWeight: "600",
         alignItems: "center",
       }}
@@ -43,7 +41,6 @@ const Card = ({ business_name, description, location, category }) => (
       style={{
         fontSize: 12,
         color: "#575632",
-        fontFamily: "RobotoMono-Regular",
         alignItems: "center",
         margin: 2,
         marginTop: 10,

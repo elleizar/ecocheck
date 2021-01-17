@@ -21,7 +21,6 @@ const Card = ({ business_name, item_type, location, amount }) => (
     <Text
       style={{
         fontSize: 15,
-        fontFamily: "RobotoMono-Regular",
         fontWeight: "600",
         alignItems: "center",
       }}
@@ -34,7 +33,6 @@ const Card = ({ business_name, item_type, location, amount }) => (
       style={{
         fontSize: 12,
         color: "#575632",
-        fontFamily: "RobotoMono-Regular",
         alignItems: "center",
         margin: 2,
         marginTop: 10,
@@ -48,7 +46,6 @@ const Card = ({ business_name, item_type, location, amount }) => (
           color: "black",
           fontSize: 12,
           margin: 2,
-          fontFamily: "RobotoMono-Regular",
         }}
       >
         {" "}
@@ -58,7 +55,6 @@ const Card = ({ business_name, item_type, location, amount }) => (
       style={{
         fontSize: 12,
         color: "#575632",
-        fontFamily: "RobotoMono-Regular",
         alignItems: "center",
         margin: 2,
         marginTop: 10,
@@ -95,12 +91,20 @@ export default function History({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View>
+      <Text style={{ marginBottom: 50, fontSize: 50, color: '#485',textAlign: "center" }}>
+          Purchase History
+        </Text>
         <FlatList
             // style={styles.flatlist}
             data={transactions}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />
+        <Button style={styles.buttonStyle}
+          title="Open in Bank App"
+          onPress={() => onHistory()}
+          color='green'
+        />
       </View>
     </SafeAreaView>
   )

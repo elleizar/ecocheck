@@ -47,6 +47,23 @@ def success_response(data, code=200):
 def failure_response(message, code=404):
     return json.dumps({"success": False, "error": message}), code
 
+@app.route("/session/", methods=["POST"])
+def update_session():
+    success, update_token = extract_user_session_token(request)
+    if not success:
+        return update_token
+    try:
+        user = user_helpers.renew_session(update_token)
+    except Exception as e:
+        return json.dumps({"error": f"Invalid update token: {str(e)}"})
+    return json.dumps(
+        {
+            "session_token": user.session_token,
+            "session_expiration": str(user.session_expiration),
+            "update_token": user.update_token,
+        }
+    )
+
 @app.route("/register/", methods = ["POST"])
 def register_user():
     body = json.loads(request.data)

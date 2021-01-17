@@ -1,11 +1,35 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
+import { StyleSheet, Button, View, SafeAreaView, Text, TextInput } from 'react-native';
 
-export default function Search() {
+export default function Search({ navigation }) {
+
+  const [search_item, setName] = React.useState("");
+  
+  const onSearch = async () => {
+    let info = {
+      name: search_item,
+   };
+    search(search_item)
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Search screen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={{ marginBottom: 50, marginTop: 15, fontSize: 50, color: '#485' }}>
+          Search
+      </Text>
+        <TextInput
+          style={{ width: 300, height: 40, borderColor: 'green', borderWidth: 1, borderRadius: 10, marginBottom: 20 }}
+          label="Search_item"
+          placeholder="I'm looking for..."
+        />
+        <Button style={styles.buttonStyle}
+          title="Search"
+          //onPress={() => navigation.navigate('ProfileStack')}
+          color='green'
+        />
+      </View>
+    </SafeAreaView>
   )
 };
 
@@ -16,5 +40,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonStyle: {
+    backgroundColor: 'green'
+  }
 });
 

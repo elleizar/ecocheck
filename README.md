@@ -8,3 +8,15 @@ The main features that our app will include is a map where a user can select the
 
 ## motivation
 We were motivated to make this project because we want to see cities (and the entire world) grow to become more sustainable. We want our app to help make changes in the lifestyle of our users and show them ways that they can spend their money and be more eco-friendly. We want our users to be trendsetters to show other businesses and people that striving for sustainable and ethical products is important. We also want our app to be a tool for businesses to educate their customers on the manufacturing of their products and make them think more about where they spend their money!
+
+## run it locally!
+Clone the repository.
+### `npm install`
+Install the dependencies.
+### `npm start`
+Run the app in the development mode.\
+Open [http://localhost:19002](http://localhost:19002) to select where to run it on.
+### `pip3 install -r requirements.txt`
+Install the python dependencies.
+### `flask run`
+Run in the api folder, to run the api.
